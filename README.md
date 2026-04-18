@@ -1,1 +1,66 @@
-# naver-review-textmining-portfolio
+# Naver Blog Review Ad Classification
+
+## 프로젝트 개요
+온라인 환경에서는 광고성 후기와 실제 사용 후기가 혼재되어 있어 사용자가 신뢰할 수 있는 정보를 선별하기 어렵습니다.  
+본 프로젝트는 네이버 블로그 데이터를 바탕으로 광고성/비광고성 글을 구분하는 텍스트마이닝 분류 파이프라인을 구현한 작업입니다.
+
+## 문제 정의
+- 블로그 후기에는 협찬, 체험단, 광고성 문구가 포함된 게시물이 다수 존재함
+- 사용자는 실제 사용 후기와 광고성 글을 구분하기 어려움
+- 따라서 텍스트 기반으로 광고성 여부를 판별할 수 있는 기준과 분류 모델이 필요하다고 판단함
+
+## 수행 내용
+- 네이버 검색 API를 이용해 블로그 글 제목/요약 데이터 수집
+- 광고성/비광고성 판단 기준을 설정하고 일부 데이터에 대해 직접 수동 라벨링 수행
+- 광고/비광고 키워드 기반 weak label 생성
+- 텍스트 전처리 및 특징 추출(TF-IDF, N-gram) 수행
+- Logistic Regression 기반 분류 모델 학습
+- weak label과 human label을 함께 활용하는 Mixed 학습 흐름 검토
+
+## 데이터 설명
+### 1) human_label_ad.csv
+- 직접 수동 라벨링한 데이터
+- 컬럼
+  - `링크`: 네이버 블로그 URL
+  - `human_label`: 사람이 직접 판별한 라벨
+
+### 2) Naver Review(립밤).ipynb
+- 전체 분석 및 실험 과정을 담은 Jupyter Notebook
+- 주요 흐름
+  1. 환경 설정 및 라이브러리 import
+  2. 검색어 정의 및 수집 조건 설정
+  3. 네이버 블로그 데이터 수집
+  4. 규칙 기반 점수 부여(weak label)
+  5. 텍스트 전처리
+  6. TF-IDF 벡터화
+  7. Logistic Regression 학습 및 평가
+  8. Mixed 모델 성능 비교
+
+## 사용 기술
+- Python
+- Pandas
+- NumPy
+- Scikit-learn
+- Matplotlib
+- Jupyter Notebook
+- Naver Search API
+
+## 프로젝트 의의
+이 프로젝트는 단순히 모델을 적용하는 수준을 넘어,  
+비정형 텍스트 데이터를 직접 수집하고, 수동 라벨링 기준을 세우고, 이를 학습 가능한 형태로 구조화한 뒤 분류 모델로 연결했다는 점에서 의미가 있습니다.  
+특히 데이터 구축, 전처리, 라벨 기준 설계, 모델링이 모두 연결된 문제 해결형 프로젝트라는 점에서 데이터 엔지니어링 및 인공지능 기반 분석 역량을 보여줄 수 있습니다.
+
+## 파일 구조 예시
+```bash
+Naver-Blog-Ad-Classification/
+├── README.md
+├── data/
+│   └── human_label_ad.csv
+├── notebooks/
+│   └── naver_review_lipbalm.ipynb
+└── results/
+    └── (그래프 또는 결과 이미지)
+```
+
+## 한 줄 소개
+직접 수동 라벨링한 데이터와 규칙 기반 약한 라벨을 결합하여 네이버 블로그 리뷰의 광고성/비광고성 여부를 분류한 텍스트마이닝 프로젝트
